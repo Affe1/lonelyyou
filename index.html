@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>User Count</title>
+    <style>
+        div,
+input,
+textarea,
+button,
+select,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('/images/back.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #FFFFFF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container2 {
+            display: flex;
+            flex-direction: column; /* Anpassung hier: Spaltenlayout für die Räume */
+            gap: 20px;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+          
+            text-align: center;
+        }
+
+        .row {
+            display: flex;
+            gap: 20px;
+        }
+        @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+        .room {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            /* background-color: #141726; */
+            background-color: rgba(0, 0, 0, 0.6);
+            width: 200px;
+            height:200px;
+            text-align: center;
+            transition: transform 0.5s;
+            
+            /* border: 0.1rem solid hsl(0, 0%, 60%);
+padding: 0.4em;
+box-shadow: 
+  0 0 .2rem hsl(0, 0%, 100%),
+  0 0 .2rem #fff,
+  0 0 2rem #8cb3d9, 
+  0 0 0.8rem #8cb3d9,
+  0 0 2.8rem #8cb3d9,
+  inset 0 0 1.3rem #8cb3d9; */
+
+  
+        }
+.pulsing{
+
+    animation: pulse 3s infinite;
+}
+        .room:hover {
+            transform: scale(1.05);
+            cursor: pointer;
+        }
+
+        .room h2, .room p {
+            margin: 0;
+            color: #FFFFFF;
+          
+            text-shadow: 
+                0 0 10px rgba(255, 255, 255, 0.7),
+                0 0 20px rgba(255, 255, 255, 0.5),
+                0 0 30px rgba(255, 255, 255, 0.3),
+                0 0 40px rgba(255, 255, 255, 0.1);
+        }
+        #room1 h2, #room1 p {
+    text-shadow: 0 0 10px rgba(255, 182, 193, 0.7), /* light pink */
+                 0 0 20px rgba(255, 182, 193, 0.5), 
+                 0 0 30px rgba(255, 182, 193, 0.3), 
+                 0 0 40px rgba(255, 182, 193, 0.1);
+}
+
+#room2 h2, #room2 p {
+    text-shadow: 0 0 10px rgba(193, 255, 182, 0.7), /* light green */
+                 0 0 20px rgba(193, 255, 182, 0.5), 
+                 0 0 30px rgba(193, 255, 182, 0.3), 
+                 0 0 40px rgba(193, 255, 182, 0.1);
+}
+
+#room3 h2, #room3 p {
+    text-shadow: 0 0 10px rgba(182, 193, 255, 0.7), /* light blue */
+                 0 0 20px rgba(182, 193, 255, 0.5), 
+                 0 0 30px rgba(182, 193, 255, 0.3), 
+                 0 0 40px rgba(182, 193, 255, 0.1);
+}
+        #room1 {
+            order: 2;
+            align-self: flex-start; /* Anpassung hier: Raum 1 nach oben links ausrichten */
+            margin-top: -20px; /* Anpassung hier: Abstand nach oben korrigieren */
+            margin-right: 20px; /* Anpassung hier: Abstand nach rechts für den Raum 1 */
+        }
+
+        #room2 {
+            order: 1; /* Anpassung hier: Raum 2 als erstes */
+            align-self: flex-end; /* Anpassung hier: Raum 2 nach unten rechts ausrichten */
+            margin-left: 20px; /* Anpassung hier: Abstand nach links für Raum 2 */
+        }
+
+        #room3 {
+            order: 3; /* Anpassung hier: Raum 3 als drittes */
+            align-self: center; /* Anpassung hier: Raum 3 in der Mitte ausrichten */
+        }
+
+        @media (min-width: 600px) {
+            .row {
+                flex-direction: row; /* Anpassung hier: Auf Zeilenlayout für größere Bildschirme umschalten */
+            }
+
+            .room {
+                margin: 0; /* Zurücksetzen der spezifischen Margins auf größeren Bildschirmen */
+            }
+        }
+ 
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Transparenter Hintergrund */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px; /* Padding links und rechts hinzufügen */
+            z-index: 1000; /* Sicherstellen, dass die Menüleiste über anderen Inhalten liegt */
+        }
+
+        .navbar .logo {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .navbar .menu {
+            display: flex;
+            align-items: center; /* In der Mitte ausrichten */
+        }
+
+        .navbar .menu a {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 18px;
+            margin-right: 20px; /* Abstand zwischen den Menüpunkten */
+        }
+
+        .navbar .menu a:last-child {
+            margin-right: 30px; /* Kein Abstand für das letzte Element */
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .navbar .menu {
+                margin-top: 10px;
+            }
+            .room{
+                width: 11em;
+                height: 11em;
+            }
+        }
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            font-size: small;
+            padding: 10px 20px; /* Padding links und rechts hinzufügen */
+            color: hsl(37, 14%, 40%);
+            text-align: center;
+           
+        }
+
+        .footer a {
+            color: hsl(37, 14%, 40%);
+            text-decoration: none;
+            margin: 0 6px;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+         .icon {
+  display: none;
+
+}
+
+
+.menu a{
+    width: fit-content;
+}
+
+        @media screen and (max-width: 600px) {
+            .navbar .menu a:last-child {margin: auto;}
+  .menu a {display: none;}
+  .navbar .logo{
+    width: fit-content;
+  }
+  .navbar .menu{
+    display: block;
+  }
+  .navbar{
+    align-items: unset;
+  }
+  a.icon {
+  
+  display: block;
+  position: absolute;
+    right: 50px;
+    top: 10px;
+    color: #fff;
+   
+  }
+}
+
+/* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
+@media screen and (max-width: 600px) {
+  .menu.responsive {position: relative;}
+  .menu.responsive a.icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .menu.responsive a {
+   margin: auto;
+    display: block;
+  
+  }
+}
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <a href="#" class="logo">Lonely You</a>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+          </a>
+        <div class="menu" id="myTopnav">
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Login</a>
+            
+        </div>
+    </div>
+    <div class="container2">
+        <div class="row">
+            <div class="room" id="room2">
+                <p>DEPRESSED</p> <br>
+                <h2 class="pulsing" > <span id="users2">5.000</span></h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="room" id="room3">
+                <p>HURT FROM
+                    LOVE</p><br>
+                <h2 class="pulsing"> <span  id="users3">8.000</span></h2>
+            </div>
+            <div class="room" id="room1">
+                <p>JUST LOST
+                    RIGHT NOW</p><br>
+                <h2 class="pulsing"> <span  id="users1">10.000</span></h2>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <a href="#">data policy</a>
+        <a href="#">imprint</a>
+        <div><span>&copy; 2024 Lonely You. All rights reserved.</span></div>
+        
+    </div>
+    <script>
+        function myFunction() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "menu") {
+    x.className += " responsive";
+  } else {
+    x.className = "menu";
+  }
+}
+    </script>
+</body>
+</html>
